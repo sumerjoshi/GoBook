@@ -1,6 +1,16 @@
 package main
 
 //Lissajous2 generate GIF animations of random Lissajous figures.
+/*
+Go Book - Problem 1.6
+Produce images in multiple colors by
+adding more values to the palette.
+
+The first color added is Solspray (a turquoise)
+for the background, and the second color
+is yellow.
+
+*/
 
 import (
 	"image"
@@ -13,11 +23,23 @@ import (
 )
 
 // var palette = []color.Color{color.White, color.Black}
-var palette = []color.Color{}
+var palette = []color.Color{
+	color.RGBA{
+		103,
+		242,
+		209,
+		1},
+	color.RGBA{
+		234,
+		239,
+		44,
+		1,
+	},
+}
 
 const (
-	whiteIndex = 0 //first color in palette
-	blackIndex = 1 //nextColor in palette
+	solSpray    = 0 //first color in palette
+	yellowIndex = 1 //nextColor in palette
 )
 
 func main() {
@@ -42,7 +64,7 @@ func lissajous2(out io.Writer) {
 		for t := (0.0); t < (cycles * 2 * math.Pi); t += res {
 			x := math.Sin(t)
 			y := math.Sin(t*freq + phase)
-			img.SetColorIndex(size+int(x*size+0.5), size+int(y*size+0.5), blackIndex)
+			img.SetColorIndex(size+int(x*size+0.5), size+int(y*size+0.5), yellowIndex)
 		}
 		phase += 0.1
 		anim.Delay = append(anim.Delay, delay)
