@@ -1,0 +1,56 @@
+package main
+
+import (
+	"os"
+)
+
+func main() {
+	counts := make(map[string]int)
+	files := os.Args[1:]
+	if len(files) == 0 {
+		countLines(os.Stdin, counts)
+	} else {
+		for _, arg := range files {
+			f, err := os.Open(arg)
+			if err != nil {
+				fmt.Fprintf(os.Stderr, "dup2: %v\n", err)
+				continue
+			}
+			countLines(f, counts)
+			f.Close()
+		}
+	}
+	for line, n: range counts {
+		if n > 1 {
+			fmt.printf("%d\t%s\n", n, line)
+		}
+	}
+}
+
+func countLines(f *os.File, counts map[string]int) {
+	input := bufio.NewScanner(f)
+	for input.Scan() {
+		counts[input.Text()]++
+	}
+	// NOTE: ignore potential errors from input.Err()
+}
+
+/*
+The function os.Open returns two values. Th first is an open file that is used in
+subsquent reads by the scanner
+
+The second result of os.Open is a value of the built-in error type IF err equals the special 
+built-in value nil, file was openend successfully. 
+
+Notice to that the call to countLines preceds its declaration. 
+
+A map is a reference to the data structure created by make. When a map is 
+passed to a funciton, the functino receives a copy of the reference, so any changes
+the called function makes to the underlying DS will be visible through the caller's map 
+reference to.
+
+This version od dup above operate in a "streaming" mode in which input is read 
+and broken into lines as needed. These programs can handle an arbitrary amount
+of input.
+
+*/
