@@ -1,0 +1,9 @@
+0.255458s
+ 20460
+ http://google.com
+0.447341s
+ 2610
+ http://twitter.com
+0.703759s
+ 68174
+ http://facebook.com
